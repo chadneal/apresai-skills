@@ -1,82 +1,32 @@
 # apresai Skills Marketplace
 
-**Production-ready AI automation skills for Claude Code**
+**Production-ready skills that supercharge Claude Code**
 
-Transform complex browser workflows into simple Python scripts using natural language. Build web scrapers, automate forms, monitor websites, and more—all powered by Amazon Nova Act's AI browser automation.
-
----
-
-## What Is This?
-
-This marketplace provides **ready-to-use skills** that teach Claude Code how to generate production-quality automation scripts. Currently featuring the **Nova Act skill**, which enables Claude to create browser automation workflows using natural language commands.
-
-### What Can You Build?
-
-**E-commerce Automation**
-- Compare prices across Amazon, Best Buy, Target (see it run in parallel!)
-- Monitor products for price drops and stock availability
-- Automate order tracking and status updates
-- Extract product reviews and ratings at scale
-
-**Form Automation**
-- Auto-fill job applications with your resume data
-- Submit surveys and feedback forms in bulk
-- Create accounts across multiple platforms
-- Handle multi-step registration workflows
-
-**Web Scraping & Monitoring**
-- Extract structured data from any website
-- Monitor competitors' pricing and inventory
-- Track real estate listings for new properties
-- Get alerts when content changes on websites you care about
-
-**Testing & QA**
-- Automate user flow testing
-- Validate forms and checkout processes
-- Run regression tests across browsers
-- Screenshot capture for visual testing
+A curated collection of expert knowledge packages that teach Claude Code how to generate professional-quality code for specialized domains.
 
 ---
 
-## Quick Start
+## What Is a Skills Marketplace?
 
-### 1. Install the Marketplace
+Think of skills as **expert knowledge packages** that Claude Code can reference when generating code. When you install a skill from this marketplace, Claude gains deep expertise in a specific domain—complete with best practices, common patterns, security guidelines, and working examples.
 
-In Claude Code, add this marketplace:
+### How It Works
 
-```bash
-/plugin marketplace add apresai/nova-act-skill
+```
+1. You install a skill from this marketplace
+         ↓
+2. The skill becomes available to Claude Code
+         ↓
+3. You ask Claude to help with a task in that domain
+         ↓
+4. Claude references the skill to generate expert-level code
+         ↓
+5. You get production-ready code, not basic examples
 ```
 
-### 2. Get Your Nova Act API Key
-
-1. Visit [nova.amazon.com/act](https://nova.amazon.com/act)
-2. Sign in with your Amazon.com account (the one you shop with)
-3. Generate your API key
-4. Set it in your environment:
-
-```bash
-export NOVA_ACT_API_KEY="your_api_key_here"
-```
-
-### 3. Install Nova Act SDK
-
-```bash
-pip install nova-act
-playwright install chrome
-```
-
-### 4. Ask Claude to Build Something!
-
-Try these example prompts with Claude Code:
-
-> *"Using the Nova Act skill, create a script that searches Amazon for wireless headphones under $200, extracts the top 5 results with prices and ratings, and saves them to a CSV file."*
-
-> *"Build a Nova Act script that monitors a specific product page on Best Buy and sends me an alert when the price drops below $500."*
-
-> *"Create a form-filling script that logs into my job portal and applies to positions matching my criteria."*
-
-Claude will generate a complete, production-ready Python script using Nova Act best practices.
+**The difference:**
+- **Without skills:** Claude generates code based on general knowledge
+- **With skills:** Claude generates code using domain-specific expertise, proven patterns, and production best practices
 
 ---
 
@@ -86,399 +36,345 @@ Claude will generate a complete, production-ready Python script using Nova Act b
 
 **AI-Powered Browser Automation**
 
-Generate production-ready Python scripts that control web browsers using natural language commands. Built on Amazon Nova Act, the AI-native browser automation SDK.
+Teaches Claude how to generate production-ready Python scripts for browser automation using Amazon Nova Act. Instead of brittle CSS selectors and XPath, use natural language commands.
 
-**What's Included:**
-- Complete Nova Act API reference (20KB skill document)
-- 3 production-ready example scripts with full source code
-- Best practices guide and common patterns
-- Security guidelines for handling credentials
-- Quick start guide with troubleshooting
+**What you can build:**
+- E-commerce price comparison and monitoring
+- Automated form filling (job applications, surveys, etc.)
+- Web scraping with structured data extraction
+- Website change detection and alerts
+- Automated QA testing workflows
 
-**Example Scripts:**
-
-1. **Price Comparison** (`01_price_comparison.py`)
-   - Parallel web scraping across Amazon, Best Buy, Target
-   - Pydantic schemas for structured data extraction
-   - Comparison analysis with savings calculation
-   - JSON export of results
-
-2. **Form Filling** (`02_form_filling.py`)
-   - Persistent authentication with saved sessions
-   - Captcha detection and human intervention
-   - File upload handling
-   - Screenshot verification
-
-3. **Monitoring & Alerts** (`03_monitoring_alerts.py`)
-   - Headless automation for scheduled tasks
-   - Change detection algorithms
-   - Alert triggering on price/stock changes
-   - Historical data tracking
+**What's included:**
+- 20KB skill document with complete Nova Act API reference
+- 3 production-ready example scripts (price comparison, form filling, monitoring)
+- Best practices for prompting, error handling, and security
+- Quick start guide and troubleshooting
 
 **Install:**
 ```bash
 /plugin install nova-act-skill
 ```
 
-**Documentation:** [nova-act-skill](./plugins/nova-act-skill/README.md)
+**Learn more:** [nova-act-skill documentation](./plugins/nova-act-skill/README.md)
+
+**Example prompt:**
+> *"Using the Nova Act skill, create a script that searches Amazon for wireless headphones under $200, extracts the top 5 results with prices and ratings, and saves them to CSV."*
 
 ---
 
-## How It Works
+## Quick Start
 
-### Traditional Approach
-```python
-# Complex, brittle code
-from selenium import webdriver
-driver = webdriver.Chrome()
-driver.get("https://example.com")
-search_box = driver.find_element(By.ID, "search")
-search_box.send_keys("product")
-submit = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
-submit.click()
-# Hope the selectors don't change!
+### 1. Add This Marketplace
+
+In Claude Code:
+
+```bash
+/plugin marketplace add apresai/apresai-skills
 ```
 
-### Nova Act Approach
-```python
-# Simple, natural language
-from nova_act import NovaAct
+### 2. Browse Available Skills
 
-with NovaAct(starting_page="https://example.com") as nova:
-    nova.act("search for product")
-    nova.act("click the first result")
-    # AI figures out the selectors!
+```bash
+/plugin
 ```
 
-### The Claude Code + Nova Act Advantage
+### 3. Install a Skill
 
-Just tell Claude what you want to automate, and it generates the complete script:
-
-**Your Request:**
-> "Create a script that finds the cheapest laptop under $1000 on Amazon"
-
-**Claude Generates:**
-```python
-from nova_act import NovaAct
-from pydantic import BaseModel
-
-class Laptop(BaseModel):
-    name: str
-    price: float
-    rating: float
-
-with NovaAct(starting_page="https://amazon.com") as nova:
-    nova.act("search for laptops")
-    nova.act("set price filter to under $1000")
-    nova.act("sort by price low to high")
-
-    result = nova.act(
-        "Extract name, price, and rating of the first laptop",
-        schema=Laptop.model_json_schema()
-    )
-
-    if result.matches_schema:
-        laptop = Laptop.model_validate(result.parsed_response)
-        print(f"Best deal: {laptop.name} - ${laptop.price}")
+```bash
+/plugin install nova-act-skill
 ```
+
+### 4. Use the Skill
+
+Ask Claude to build something, mentioning the skill by name:
+
+> *"Using the Nova Act skill, create a script that..."*
+
+Claude will now generate code using the expert knowledge from that skill.
 
 ---
 
 ## Why Use This Marketplace?
 
-**For Individual Developers:**
-- Skip the learning curve—Claude knows the best practices
-- Get production-ready code, not examples that need fixing
-- Save hours of debugging with proven patterns
-- Built-in error handling and security considerations
+### For Individual Developers
+- **Skip the learning curve** - Claude knows the best practices instantly
+- **Get production-ready code** - Not toy examples that need extensive modification
+- **Save hours of debugging** - Proven patterns and error handling built in
+- **Learn as you go** - Generated code demonstrates expert techniques
 
-**For Teams:**
-- Standardize automation across your organization
-- Reduce training time for new team members
-- Leverage AI without requiring ML expertise
-- Maintain consistent code quality
+### For Teams
+- **Standardize code quality** - Everyone gets the same expert-level guidance
+- **Reduce onboarding time** - New team members get productive faster
+- **Consistent patterns** - All automation follows the same proven approaches
+- **Share knowledge** - Skills encode institutional knowledge
 
-**For Researchers & Data Scientists:**
-- Collect data from multiple sources in parallel
-- No more fighting with Selenium or BeautifulSoup
-- Focus on analysis, not web scraping infrastructure
-- Reproducible data collection workflows
-
----
-
-## Real-World Use Cases
-
-### E-commerce Research
-"I need to track prices for 50 products across 3 retailers daily."
-- **Solution:** Nova Act script with parallel execution + cron job
-- **Time saved:** Manual checking would take 2+ hours/day → 5 minutes automated
-
-### Job Application Automation
-"I'm applying to 100+ positions with similar requirements."
-- **Solution:** Form-filling script with saved authentication
-- **Time saved:** 30 minutes per application → 2 minutes automated
-
-### Competitive Intelligence
-"Monitor competitor websites for product launches and pricing changes."
-- **Solution:** Headless monitoring script with email alerts
-- **Time saved:** Continuous monitoring vs manual daily checks
-
-### QA Testing
-"Test our checkout flow across different scenarios and browsers."
-- **Solution:** Automated testing with screenshot capture
-- **Time saved:** 2 hours of manual testing → 10 minutes automated
+### For Researchers & Data Scientists
+- **Focus on analysis, not infrastructure** - Automate data collection quickly
+- **Reproducible workflows** - Generated code is self-documenting
+- **Parallel data collection** - Built-in patterns for concurrent execution
+- **Clean data extraction** - Structured schemas, not fragile parsing
 
 ---
 
-## Key Features
+## Marketplace Philosophy
 
-### 🧠 AI-Native Automation
-No CSS selectors. No XPath. Just describe what you want in plain English.
+### Quality Over Quantity
 
-### 📊 Structured Data Extraction
-Use Pydantic schemas to extract clean, typed data—no regex parsing nightmares.
+Every skill in this marketplace is:
+- **Production-tested** - Includes real working examples
+- **Comprehensively documented** - Complete API references and guides
+- **Security-conscious** - Built-in patterns for handling credentials safely
+- **Well-maintained** - Updated as underlying tools evolve
 
-### ⚡ Parallel Execution
-Run multiple browser sessions concurrently. Compare prices across 10 retailers in the time it takes to check one.
+### Expert Knowledge, Not Basic Tutorials
 
-### 🔒 Security-First
-Built-in patterns for handling passwords, sessions, and sensitive data safely.
+Skills provide:
+- Complete API references
+- Common patterns and anti-patterns
+- Production best practices
+- Security and error handling patterns
+- Real-world examples with full source code
 
-### 🎯 Production-Ready
-Error handling, logging, retry logic, and monitoring built into generated code.
+### Domain-Specific Expertise
 
-### 📚 Complete Documentation
-20KB skill reference, working examples, troubleshooting guides, and best practices.
+Each skill focuses on a specific domain where Claude benefits from deep, structured knowledge:
+- Browser automation (Nova Act)
+- *Future: Computer vision, NLP, data analysis, testing frameworks, and more*
 
 ---
 
-## System Requirements
+## How Skills Improve Claude's Output
 
-- **Python:** 3.10 or higher
-- **Operating Systems:** macOS, Ubuntu 22.04+, WSL2, Windows 10+
-- **Location:** US-based (Nova Act is currently US-only)
-- **Browser:** Chrome recommended (auto-installed via Playwright)
-- **API Key:** Free tier available at [nova.amazon.com/act](https://nova.amazon.com/act)
+### Without a Skill
+
+**Your prompt:**
+> "Create a script to scrape product prices from Amazon"
+
+**Claude generates:**
+```python
+# Basic web scraping with requests/BeautifulSoup
+# May break if HTML structure changes
+# No error handling or retry logic
+# Manual parsing of prices (brittle)
+```
+
+### With a Skill
+
+**Your prompt:**
+> "Using the Nova Act skill, create a script to scrape product prices from Amazon"
+
+**Claude generates:**
+```python
+# Uses AI-native browser automation (no selectors)
+# Complete error handling with ActError
+# Pydantic schemas for structured data
+# Parallel execution pattern
+# Security best practices
+# Production-ready logging
+```
+
+---
+
+## Skill Categories
+
+### 🤖 AI Automation
+**Current:** nova-act-skill (browser automation)
+**Coming:** Computer vision, voice automation, AI agent frameworks
+
+### 📊 Data & Analytics
+**Coming:** Data validation, ETL pipelines, statistical analysis, visualization
+
+### 🧪 Testing & QA
+**Coming:** Testing frameworks, mocking patterns, performance testing, CI/CD
+
+### 🔒 Security
+**Coming:** Authentication patterns, encryption, secure data handling, API security
 
 ---
 
 ## Installation
 
-### Step 1: Add to Claude Code
+### System Requirements
+
+- **Claude Code** - Latest version recommended
+- **Python 3.10+** - For running generated scripts
+- **Git** - For cloning skill repositories
+
+### Add This Marketplace
+
 ```bash
-/plugin marketplace add apresai/nova-act-skill
+# In Claude Code
+/plugin marketplace add apresai/apresai-skills
+
+# Browse available skills
+/plugin
+
+# Install a specific skill
 /plugin install nova-act-skill
 ```
-
-### Step 2: Install Nova Act SDK
-```bash
-pip install nova-act
-playwright install chrome
-```
-
-### Step 3: Set API Key
-```bash
-export NOVA_ACT_API_KEY="your_api_key_from_nova.amazon.com"
-```
-
-### Step 4: Test It Out
-```bash
-python plugins/nova-act-skill/examples/01_price_comparison.py
-```
-
-See the [Quick Start Guide](./plugins/nova-act-skill/QUICKSTART.md) for detailed setup instructions and troubleshooting.
 
 ---
 
 ## Documentation
 
-- **[Nova Act Skill README](./plugins/nova-act-skill/README.md)** - Overview and usage guide
-- **[Quick Start Guide](./plugins/nova-act-skill/QUICKSTART.md)** - 5-minute setup walkthrough
-- **[Skill Reference](./plugins/nova-act-skill/SKILL.md)** - Complete API documentation (20KB)
-- **[Package Overview](./plugins/nova-act-skill/OVERVIEW.md)** - Detailed contents and learning paths
-- **[Example Scripts](./plugins/nova-act-skill/examples/)** - Three production-ready examples
+### Marketplace-Level
+- **[GETTING_STARTED.md](./GETTING_STARTED.md)** - New user guide (10-minute tutorial)
+- **[CLAUDE.md](./CLAUDE.md)** - Instructions for Claude Code (repository guidance)
+
+### Skill-Specific
+Each skill has its own comprehensive documentation in `plugins/<skill-name>/`:
+- README.md - Skill overview and quick start
+- SKILL.md - Complete reference documentation
+- QUICKSTART.md - 5-minute setup guide
+- OVERVIEW.md - Detailed contents
+- examples/ - Working code examples
 
 ---
 
-## Example Gallery
+## Real-World Impact
 
-### Price Comparison Script
-Searches multiple retailers in parallel and finds the best deal:
+### Time Savings
 
-```python
-# Run searches concurrently
-with ThreadPoolExecutor(max_workers=3) as executor:
-    futures = {
-        executor.submit(search_amazon, "headphones"): "Amazon",
-        executor.submit(search_bestbuy, "headphones"): "Best Buy",
-        executor.submit(search_target, "headphones"): "Target",
-    }
-```
+**Price Monitoring (50 products, 3 sites, daily)**
+- Manual: 2+ hours/day
+- Automated with Nova Act skill: 5 minutes/day
+- **Annual savings: ~730 hours**
 
-**Output:**
-```
-PRICE COMPARISON RESULTS
-========================================
-1. Target
-   Product: Sony WH-1000XM5
-   Price: $349.99
-   In Stock: Yes
-   Rating: 4.8/5.0
+**Job Applications (100 positions)**
+- Manual: 30 minutes each = 50 hours total
+- Automated with Nova Act skill: 2 minutes each = 3.3 hours total
+- **Savings: ~47 hours**
 
-Best Deal: Target at $349.99
-Savings: $50.00 vs most expensive option
-```
+**QA Testing (checkout flow, 10 scenarios)**
+- Manual: 2 hours
+- Automated with Nova Act skill: 10 minutes
+- **Savings per run: 1 hour 50 minutes**
 
-### Monitoring Script
-Detects price changes and sends alerts:
+### Quality Improvements
 
-```python
-monitor = WebsiteMonitor(
-    url="https://www.example.com/product",
-    check_interval=3600,  # Check every hour
-    alert_on_price_drop=True
-)
-monitor.run()
-```
-
-**Output:**
-```
-🔔 ALERT: Price dropped from $399.99 to $349.99!
-📊 Monitoring session complete:
-   - Total checks: 24
-   - Changes detected: 2
-   - Price alerts: 1
-```
-
----
-
-## Best Practices (Built Into Generated Code)
-
-### ✅ Break Tasks Into Small Steps
-Nova Act works best with atomic, specific commands:
-```python
-# Good
-nova.act("click the search button")
-nova.act("enter 'laptops' in the search box")
-nova.act("click the first result")
-
-# Not ideal
-nova.act("search for laptops and click the first result")
-```
-
-### ✅ Use Schemas for Data
-Always use Pydantic for structured extraction:
-```python
-class Product(BaseModel):
-    name: str
-    price: float
-    in_stock: bool
-
-result = nova.act("extract product info", schema=Product.model_json_schema())
-```
-
-### ✅ Handle Errors Gracefully
-Production code includes proper error handling:
-```python
-from nova_act import ActError
-
-try:
-    with NovaAct(starting_page=url) as nova:
-        nova.act("perform action")
-except ActError as e:
-    logger.error(f"Automation failed: {e}")
-    # Retry or alert
-```
-
-### ✅ Secure Credential Handling
-Never pass passwords to act() prompts:
-```python
-# Good - direct Playwright interaction
-import getpass
-password = getpass.getpass()
-nova.page.keyboard.type(password)
-
-# Bad - visible in screenshots
-nova.act(f"enter password {password}")
-```
-
----
-
-## Limitations
-
-- **Geographic:** US availability only
-- **Language:** English language only
-- **Scope:** Browser-based automation only (no desktop apps)
-- **PDF:** Not optimized for PDF interaction
-- **Complexity:** Very high-level prompts may be unreliable (break into steps)
-- **Screen Size:** Optimized for 864×1296 to 1536×2304 resolution
-
----
-
-## Support & Resources
-
-**Nova Act Official:**
-- Documentation: [nova.amazon.com/act](https://nova.amazon.com/act)
-- GitHub: [github.com/aws/nova-act](https://github.com/aws/nova-act)
-- Blog: [labs.amazon.science/blog/nova-act](https://labs.amazon.science/blog/nova-act)
-- Email: nova-act@amazon.com
-
-**This Marketplace:**
-- Issues: [github.com/apresai/apresai-skills/issues](https://github.com/apresai/apresai-skills/issues)
-- Maintained by: [apresai](https://github.com/apresai)
+- **Consistency** - Same expert patterns every time
+- **Reliability** - Built-in error handling and retry logic
+- **Maintainability** - Self-documenting, production-ready code
+- **Security** - Credential handling and data protection baked in
 
 ---
 
 ## Roadmap
 
-**Coming Soon:**
-- Additional example scripts (data collection, testing workflows)
-- Video tutorials and walkthroughs
-- Integration templates for common services (email, Slack, databases)
-- More AI automation skills beyond browser control
+### Near Term
+- Additional Nova Act examples (data collection workflows, advanced monitoring)
+- Testing framework skill (pytest, mocking, fixtures)
+- API client generation skill
 
-**Future Plugins:**
-- Computer vision skills for image processing
-- Natural language processing for text analysis
-- Data analysis and visualization skills
+### Medium Term
+- Computer vision skill (image processing, OCR, object detection)
+- NLP skill (text analysis, sentiment, entity extraction)
+- Data validation skill (Pydantic, schema validation, data quality)
+
+### Long Term
+- Community-contributed skills
+- Skill versioning and compatibility
+- Skill composition (combining multiple skills)
 
 ---
 
 ## Contributing
 
-Want to contribute an example script, improve documentation, or add a new skill?
+### Suggest a Skill
 
-- Submit issues and pull requests on GitHub
-- Share your automation scripts with the community
-- Suggest new use cases and examples
+Have an idea for a skill that would be valuable? Open an issue describing:
+- The domain/technology
+- What Claude would generate with the skill
+- Key use cases
+- Why this needs structured expert knowledge
 
-*(Full contribution guidelines coming soon)*
+### Improve Existing Skills
+
+- Add new examples
+- Improve documentation
+- Report bugs or limitations
+- Suggest new patterns
+
+### Create a New Skill
+
+Want to contribute a skill? We're working on contribution guidelines. In the meantime, open an issue to discuss your idea.
+
+---
+
+## Support
+
+**For skill-specific issues:**
+- See individual skill documentation
+- Check skill-specific troubleshooting guides
+
+**For marketplace issues:**
+- GitHub Issues: [github.com/apresai/apresai-skills/issues](https://github.com/apresai/apresai-skills/issues)
+
+**For Claude Code:**
+- Documentation: [claude.ai/code](https://claude.ai/code)
+
+---
+
+## FAQs
+
+### How are skills different from plugins?
+
+**Plugins** extend Claude Code's functionality with new tools and commands.
+
+**Skills** provide domain knowledge that Claude references when generating code. They don't add new functionality—they make Claude better at generating code in specific domains.
+
+### Do I need to install skills for every project?
+
+No. Once installed, skills are available globally in Claude Code. You just reference them by name when prompting.
+
+### Can I use multiple skills together?
+
+Yes! Ask Claude to use multiple skills in the same request:
+
+> *"Using the Nova Act skill and the data validation skill, create a web scraper that..."*
+
+### How much do skills cost?
+
+All skills in this marketplace are free and open source. Some skills (like Nova Act) may require API keys for the underlying services.
+
+### How do I know when a skill is updated?
+
+Check the skill's README for version information and changelog. We recommend periodically updating installed skills:
+
+```bash
+/plugin update nova-act-skill
+```
 
 ---
 
 ## License
 
-See individual plugin directories for licensing information. Nova Act SDK is subject to Amazon's licensing and acceptable use policies.
+This marketplace and individual skills are provided under their respective licenses. See individual plugin directories for details.
 
 ---
 
-## Get Started Today
+## Get Started
 
 ```bash
 # 1. Add marketplace
-/plugin marketplace add apresai/nova-act-skill
+/plugin marketplace add apresai/apresai-skills
 
-# 2. Install skill
+# 2. Install a skill
 /plugin install nova-act-skill
 
 # 3. Ask Claude
 "Using the Nova Act skill, create a script that..."
 ```
 
-**Stop writing brittle web scrapers. Start describing what you want in plain English.**
+**Transform Claude from a general-purpose coding assistant into a domain expert.**
 
 ---
 
-**Last Updated:** November 2025
+**Maintained by:** [apresai](https://github.com/apresai)
+
 **Marketplace Version:** 1.0
-**Featured Skill:** nova-act-skill v1.0
+
+**Skills Available:** 1 (nova-act-skill)
+
+**Last Updated:** November 2025
