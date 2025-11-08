@@ -1,3 +1,8 @@
+---
+name: nova-act-builder
+description: Generate production-ready Amazon Nova Act Python scripts for browser automation using AI-powered SDK that breaks complex tasks into reliable atomic commands with natural language instructions
+---
+
 # Nova Act Script Builder
 
 ## Overview
