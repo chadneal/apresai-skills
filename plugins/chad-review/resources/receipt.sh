@@ -67,7 +67,7 @@
 #
 # gh surface is exactly four shapes, so tests can stub it: `gh pr view
 # [--json ...]`, `gh api repos/<r>/issues/<n>/comments --paginate`,
-# `gh api -X PATCH repos/<r>/issues/comments/<id> -f body=@<file>`, and
+# `gh api -X PATCH repos/<r>/issues/comments/<id> -F body=@<file>`, and
 # `gh pr comment <n> --body-file <file>`.
 #
 # BASH 3.2 (no associative arrays, no mapfile); BSD grep/sed. jq is required
@@ -347,7 +347,7 @@ do_publish() {
             and (.author_association == "OWNER" or .author_association == "MEMBER"
                  or .author_association == "COLLABORATOR"))][0].id // empty' 2>/dev/null)
   if [[ -n "$id" ]]; then
-    if gh api -X PATCH "repos/$repo/issues/comments/$id" -f "body=@$tmp" >/dev/null 2>&1; then
+    if gh api -X PATCH "repos/$repo/issues/comments/$id" -F "body=@$tmp" >/dev/null 2>&1; then
       echo "published: updated receipt comment $id on PR #$pr"
     else
       rm -f "$tmp"; echo "FAIL: could not update receipt comment on PR #$pr"; return 1
