@@ -86,12 +86,13 @@ case "$cmd" in
     esac
     ;;
   api)
-    method=GET; path=""; bodyfile=""
+    method=GET; path=""; bodyfile=""; body=""
     while [[ $# -gt 0 ]]; do
       case "$1" in
         -X) method="$2"; shift 2 ;;
         --paginate) shift ;;
-        -f) v="$2"; bodyfile="${v#body=@}"; shift 2 ;;
+        -f|--raw-field) v="$2"; body="${v#body=}"; shift 2 ;;
+        -F|--field) v="$2"; bodyfile="${v#body=@}"; shift 2 ;;
         repos/*) path="$1"; shift ;;
         *) shift ;;
       esac
@@ -100,7 +101,9 @@ case "$cmd" in
       cat "$GH_STUB_DIR/comments.json"
     else
       id="${path##*/}"
-      jq --rawfile b "$bodyfile" --argjson id "$id" \
+      body_args=(--arg b "$body")
+      [[ -z "$bodyfile" ]] || body_args=(--rawfile b "$bodyfile")
+      jq "${body_args[@]}" --argjson id "$id" \
         'map(if .id == $id then .body = $b else . end)' \
         "$GH_STUB_DIR/comments.json" > "$GH_STUB_DIR/c.tmp" \
         && mv "$GH_STUB_DIR/c.tmp" "$GH_STUB_DIR/comments.json"
@@ -287,13 +290,16 @@ h=$(cd "$r" && git rev-parse HEAD)
 reset_gh "$h"
 emit "$r" --verdict GO >/dev/null
 GH_STUB_FAIL=0
-p1=$(publish "$r" --pr 7); p2=$(publish "$r" --pr 7)
+p1=$(publish "$r" --pr 7)
+first_body=$(jq -r '.[0].body' "$GH_STUB_DIR/comments.json")
+p2=$(publish "$r" --pr 7)
 GH_STUB_FAIL=1
 check "first publish creates the comment" "published: new receipt comment" "$p1"
 check "second publish updates in place" "published: updated receipt comment" "$p2"
 n=$(jq 'length' "$GH_STUB_DIR/comments.json")
 expect_code "exactly one receipt comment exists" "1" "$n"
 check "the comment carries the marker" "chad-review-receipt v1" "$(jq -r '.[0].body' "$GH_STUB_DIR/comments.json")"
+expect_code "updating preserves the complete published receipt body" "$first_body" "$(jq -r '.[0].body' "$GH_STUB_DIR/comments.json")"
 
 # --- 14. verify reads the PR comment when the local store is gone -----------------
 rm -f "$(store_of "$r")"/*.json
